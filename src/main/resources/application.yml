@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: delayqueue
+  main:
+    allow-bean-definition-overriding: true
+server:
+    port: 7130
+    servlet:
+      context-path: /delayqueue
+
+
+
+logging:
+  level:
+    root: info
+
