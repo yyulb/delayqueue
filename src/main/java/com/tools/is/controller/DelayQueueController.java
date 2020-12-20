@@ -33,7 +33,7 @@ public class DelayQueueController {
         delayQueueJob.setId(SnowflakeIdUtil.nextId());
         DelayQueue.push(delayQueueJob);
         log.info("push success delayQueueJob = {}", GsonUtil.GsonString(delayQueueJob));
-        return Result.ok();
+        return Result.ok(delayQueueJob);
     }
 
     @ApiOperation("轮询队列获取任务")

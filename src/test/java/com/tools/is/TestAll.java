@@ -16,4 +16,9 @@ public class TestAll {
     public void test(){
         System.out.println(SnowflakeIdUtil.nextId());
     }
+
+
+    public static void main(String[] args) {
+        System.out.println(Math.floorMod(1608447338000l,10l));
+    }
 }
