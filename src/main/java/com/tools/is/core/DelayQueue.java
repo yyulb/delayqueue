@@ -29,7 +29,7 @@ public class DelayQueue {
     public static void push(DelayQueueJob delayQueueJob) {
         Long jobId = delayQueueJob.getId();
         DelayQueueJobPool.addDelayQueueJod(delayQueueJob);
-        DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(jobId, delayQueueJob.getDelayTime());
+        DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(delayQueueJob.getDelayTime(),jobId);
         boolean addResult = DelayBucket.addToBucket(getDelayBucketKey(jobId), jobIndex);
         log.info("push jobId = {},addResult = {}",jobId,addResult);
     }
@@ -53,7 +53,7 @@ public class DelayQueue {
                 Long reDelayTime = System.currentTimeMillis() + delayQueueJod.getTtrTime() * 1000L;
                 delayQueueJod.setDelayTime(reDelayTime);
                 DelayQueueJobPool.addDelayQueueJod(delayQueueJod);
-                DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(delayQueueJod.getId(), reDelayTime);
+                DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(reDelayTime,delayQueueJod.getId());
                 DelayBucket.addToBucket(getDelayBucketKey(delayQueueJod.getId()),jobIndex);
                 //返回的时候设置回原来的执行时间
                 delayQueueJod.setDelayTime(delayTime);
@@ -80,7 +80,7 @@ public class DelayQueue {
             return;
         }
         DelayQueueJobPool.deleteDelayQueueJod(delayQueueJodId);
-        DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(delayQueueJod.getId(), delayQueueJod.getDelayTime());
+        DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(delayQueueJod.getDelayTime(),delayQueueJod.getId());
         DelayBucket.deleteFormBucket(getDelayBucketKey(delayQueueJod.getId()),jobIndex);
     }
 
