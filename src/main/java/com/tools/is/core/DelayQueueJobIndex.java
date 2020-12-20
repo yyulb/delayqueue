@@ -12,7 +12,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class DelayJobIndex {
+public class DelayQueueJobIndex {
 
     /**
      * 任务的执行时间

@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RScoredSortedSet;
 
 /**
- * 延迟任务筒
+ * 延迟任务桶
  */
 @Slf4j
 public class DelayBucket {
@@ -15,11 +15,11 @@ public class DelayBucket {
     /**
      * 添加 DelayJob 到 延迟任务桶中
      * @param key
-     * @param delayJobIndex
+     * @param delayQueueJobIndex
      */
-    public static void addToBucket(String key,DelayJobIndex delayJobIndex) {
-        RScoredSortedSet<DelayJobIndex> scoredSorteSet = RedissonUtils.getScoredSorteSet(key);
-        scoredSorteSet.add(delayJobIndex.getDelayTime(),delayJobIndex);
+    public static void addToBucket(String key, DelayQueueJobIndex delayQueueJobIndex) {
+        RScoredSortedSet<DelayQueueJobIndex> scoredSorteSet = RedissonUtils.getScoredSorteSet(key);
+        scoredSorteSet.add(delayQueueJobIndex.getDelayTime(), delayQueueJobIndex);
     }
 
     /**
@@ -27,18 +27,18 @@ public class DelayBucket {
      * @param key
      * @return
      */
-    public static DelayJobIndex getFromBucket(String key) {
-        RScoredSortedSet<DelayJobIndex> scoredSortedSet = RedissonUtils.getScoredSorteSet(key);
+    public static DelayQueueJobIndex getFromBucket(String key) {
+        RScoredSortedSet<DelayQueueJobIndex> scoredSortedSet = RedissonUtils.getScoredSorteSet(key);
         return scoredSortedSet.size() == 0 ? null : scoredSortedSet.first();
     }
 
     /**
      * 从延迟任务桶中删除 jodId
      * @param key
-     * @param delayJobIndex
+     * @param delayQueueJobIndex
      */
-    public static void deleteFormBucket(String key,DelayJobIndex delayJobIndex) {
-        RScoredSortedSet<DelayJobIndex> scoredSorteSet = RedissonUtils.getScoredSorteSet(key);
-        scoredSorteSet.remove(delayJobIndex);
+    public static void deleteFormBucket(String key, DelayQueueJobIndex delayQueueJobIndex) {
+        RScoredSortedSet<DelayQueueJobIndex> scoredSorteSet = RedissonUtils.getScoredSorteSet(key);
+        scoredSorteSet.remove(delayQueueJobIndex);
     }
 }
