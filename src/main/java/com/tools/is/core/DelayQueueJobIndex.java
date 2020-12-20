@@ -17,12 +17,12 @@ public class DelayQueueJobIndex {
     /**
      * 任务的执行时间
      */
-    private long delayTime;
+    private Long delayTime;
 
     /**
      * 任务的唯一标识
      */
-    private long jodId;
+    private Long jodId;
 
 
 }

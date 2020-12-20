@@ -47,7 +47,7 @@ public class DelayBucketHandler implements Runnable {
                 //再次确认延时时间是否到了,如果没到删除旧的计算新的执行时间重新放入
                 if (delayQueueJod.getDelayTime() > System.currentTimeMillis()) {
                     DelayBucket.deleteFormBucket(this.delayBucketKey,jobIndex);
-                    DelayBucket.addToBucket(this.delayBucketKey,new DelayQueueJobIndex(delayQueueJod.getId(),delayQueueJod.getDelayTime()));
+                    DelayBucket.addToBucket(this.delayBucketKey, new DelayQueueJobIndex(delayQueueJod.getId(), delayQueueJod.getDelayTime()));
                 } else {
                     ReadyQueue.pushToReadyQueue(delayQueueJod.getTopic(),delayQueueJod.getId());
                     DelayBucket.deleteFormBucket(this.delayBucketKey,jobIndex);

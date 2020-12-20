@@ -18,7 +18,7 @@ public class DelayQueue {
      * @param delayQueueJodId
      * @return
      */
-    private static String getDelayBucketKey(long delayQueueJodId) {
+    private static String getDelayBucketKey(Long delayQueueJodId) {
         return DELAY_BUCKET_KEY_PREFIX + Math.floorMod(delayQueueJodId,DELAY_BUCKET_NUM);
     }
 
@@ -27,9 +27,11 @@ public class DelayQueue {
      * @param delayQueueJob
      */
     public static void push(DelayQueueJob delayQueueJob) {
+        Long jobId = delayQueueJob.getId();
         DelayQueueJobPool.addDelayQueueJod(delayQueueJob);
-        DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(delayQueueJob.getId(), delayQueueJob.getDelayTime());
-        DelayBucket.addToBucket(getDelayBucketKey(delayQueueJob.getId()),jobIndex);
+        DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(jobId, delayQueueJob.getDelayTime());
+        boolean addResult = DelayBucket.addToBucket(getDelayBucketKey(jobId), jobIndex);
+        log.info("push jobId = {},addResult = {}",jobId,addResult);
     }
 
     /**
@@ -46,9 +48,9 @@ public class DelayQueue {
             if (delayQueueJod == null) {
                 return null;
             } else {
-                long delayTime = delayQueueJod.getDelayTime();
+                Long delayTime = delayQueueJod.getDelayTime();
                 //获取消费超时时间，重新放到延迟任务桶中
-                long reDelayTime = System.currentTimeMillis() + delayQueueJod.getTtrTime() * 1000L;
+                Long reDelayTime = System.currentTimeMillis() + delayQueueJod.getTtrTime() * 1000L;
                 delayQueueJod.setDelayTime(reDelayTime);
                 DelayQueueJobPool.addDelayQueueJod(delayQueueJod);
                 DelayQueueJobIndex jobIndex = new DelayQueueJobIndex(delayQueueJod.getId(), reDelayTime);
@@ -64,7 +66,7 @@ public class DelayQueue {
      * 删除延迟队列任务
      * @param delayQueueJodId
      */
-    public static void delete(long delayQueueJodId) {
+    public static void delete(Long delayQueueJodId) {
         DelayQueueJobPool.deleteDelayQueueJod(delayQueueJodId);
     }
 
@@ -72,7 +74,7 @@ public class DelayQueue {
      * 业务要在ttr时间内执行完并调用finish方法，否则延迟任务会重复执行
      * @param delayQueueJodId
      */
-    public static void finish(long delayQueueJodId) {
+    public static void finish(Long delayQueueJodId) {
         DelayQueueJob delayQueueJod = DelayQueueJobPool.getDelayQueueJod(delayQueueJodId);
         if (delayQueueJod == null) {
             return;
@@ -87,7 +89,7 @@ public class DelayQueue {
      * @param delayQueueJodId
      * @return
      */
-    public static DelayQueueJob get(long delayQueueJodId) {
+    public static DelayQueueJob get(Long delayQueueJodId) {
         return DelayQueueJobPool.getDelayQueueJod(delayQueueJodId);
     }
 }

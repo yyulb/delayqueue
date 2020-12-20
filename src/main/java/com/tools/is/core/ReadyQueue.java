@@ -13,7 +13,7 @@ public class ReadyQueue {
      * @param topic
      * @param delayQueueJodId
      */
-    public static boolean pushToReadyQueue(String topic,long delayQueueJodId) {
+    public static boolean pushToReadyQueue(String topic,Long delayQueueJodId) {
         RBlockingQueue<Long> rBlockingQueue = RedissonUtils.getBlockingQueue(topic);
         return rBlockingQueue.offer(delayQueueJodId);
     }

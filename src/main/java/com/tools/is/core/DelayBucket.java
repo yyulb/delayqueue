@@ -17,9 +17,9 @@ public class DelayBucket {
      * @param key
      * @param delayQueueJobIndex
      */
-    public static void addToBucket(String key, DelayQueueJobIndex delayQueueJobIndex) {
+    public static boolean addToBucket(String key, DelayQueueJobIndex delayQueueJobIndex) {
         RScoredSortedSet<DelayQueueJobIndex> scoredSorteSet = RedissonUtils.getScoredSorteSet(key);
-        scoredSorteSet.add(delayQueueJobIndex.getDelayTime(), delayQueueJobIndex);
+        return scoredSorteSet.add(delayQueueJobIndex.getDelayTime(), delayQueueJobIndex);
     }
 
     /**
@@ -37,8 +37,8 @@ public class DelayBucket {
      * @param key
      * @param delayQueueJobIndex
      */
-    public static void deleteFormBucket(String key, DelayQueueJobIndex delayQueueJobIndex) {
+    public static boolean deleteFormBucket(String key, DelayQueueJobIndex delayQueueJobIndex) {
         RScoredSortedSet<DelayQueueJobIndex> scoredSorteSet = RedissonUtils.getScoredSorteSet(key);
-        scoredSorteSet.remove(delayQueueJobIndex);
+        return scoredSorteSet.remove(delayQueueJobIndex);
     }
 }

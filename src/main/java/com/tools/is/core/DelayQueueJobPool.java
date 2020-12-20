@@ -15,7 +15,7 @@ public class DelayQueueJobPool {
      * @param delayQueueJodId
      * @return
      */
-    public static DelayQueueJob getDelayQueueJod(long delayQueueJodId) {
+    public static DelayQueueJob getDelayQueueJod(Long delayQueueJodId) {
         RMap<Long, DelayQueueJob> rMap = RedissonUtils.getMap(DELAY_QUEUE_JOB_POOL);
         return rMap.get(delayQueueJodId);
     }
@@ -33,7 +33,7 @@ public class DelayQueueJobPool {
      * 删除 DelayQueueJod
      * @param delayQueueJodId
      */
-    public static void deleteDelayQueueJod(long delayQueueJodId) {
+    public static void deleteDelayQueueJod(Long delayQueueJodId) {
         RMap<Long, DelayQueueJob> rMap = RedissonUtils.getMap(DELAY_QUEUE_JOB_POOL);
         rMap.remove(delayQueueJodId);
     }
