@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 /**
@@ -15,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest(classes = StartApplication.class)
 @RunWith(SpringRunner.class)
 @Slf4j
+@ActiveProfiles(value = {"development"})
 public class TestZk {
 
     @Autowired
@@ -22,6 +24,6 @@ public class TestZk {
 
     @Test
     public void test(){
-        zookeeperService.createNodeAndData(CreateMode.PERSISTENT,"testzk","test");
+        zookeeperService.createNodeAndData(CreateMode.PERSISTENT,"/testzk","test");
     }
 }

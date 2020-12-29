@@ -1,6 +1,7 @@
 package com.tools.is.config.zookeeper;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -8,6 +9,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "zookeeper.config")
 @Getter
+@Setter
 public class ZookeeperParam {
 
     private String server;
