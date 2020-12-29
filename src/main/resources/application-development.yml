@@ -1,0 +1,16 @@
+zookeeper:
+  config:
+    #服务器地址
+    server: 172.29.70.143:2181,172.29.70.144:2181,172.29.71.90:2181
+    #命名空间，被称为ZNode
+    namespace: delayqueue
+    #权限控制，加密
+    digest: smile:123456
+    #会话超时时间
+    sessionTimeoutMs: 3000
+    #连接超时时间
+    connectionTimeoutMs: 60000
+    #最大重试次数
+    maxRetries: 3
+    #初始休眠时间
+    baseSleepTimeMs: 1000
