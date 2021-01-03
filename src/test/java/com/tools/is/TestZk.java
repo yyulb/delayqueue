@@ -26,4 +26,10 @@ public class TestZk {
     public void test(){
         zookeeperService.createNodeAndData(CreateMode.PERSISTENT,"/testzk","test");
     }
+
+    @Test
+    public void testGet(){
+        String nodeData = zookeeperService.getNodeData("/testzk");
+        System.out.println(nodeData);
+    }
 }
